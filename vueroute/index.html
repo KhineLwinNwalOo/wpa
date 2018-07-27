@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VueJS Router</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+	<div id="app" class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<router-link to="/home/werwr/test">Go to Home</router-link>
+				<router-link to="/blog/45">Go to Blog</router-link>
+				<router-link :to="{ name: 'home', params: { id: 34, name: 'Aung Aung' }}">Go Home Again</router-link>
+				<button class="btn btn-danger" v-on:click="goHome()">Home</button>
+				<br>
+				<router-view></router-view>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/vue.js"></script>
+	<script src="js/vue-router.js"></script>
+	<script>
+		const Home = { template : "<div>{{ this.$route.params.id }} {{ this.$route.params.name }}</div>" }
+		const Blog = { template : "<div>Blog {{ this.$route.params.id }}</div>" }	
+		const routes = [
+			{ path: '/home/:id/:name', name: "home", component: Home },
+			{ path: '/blog/:id', name: "blog", component: Blog }
+		]
+
+		const router = new VueRouter({
+			routes
+		})
+
+		const app = new Vue({
+			router,
+			methods: {
+				goHome: function() {
+					this.$router.push("/home/45/test")
+				}
+			}
+
+		}).$mount('#app')
+	</script>
+</body>
+</html>
